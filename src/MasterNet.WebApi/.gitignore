@@ -1,0 +1,7 @@
+bin/
+obj/
+
+LocalDatabase.db
+
+appsettings.Production.json
+appsettings.Staging.json
