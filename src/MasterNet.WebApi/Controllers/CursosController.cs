@@ -1,12 +1,14 @@
 using MasterNet.Application.Core;
 using MasterNet.Application.Cursos.CursoCreate;
 using MasterNet.Application.Cursos.GetCursos;
+using MasterNet.Application.Instructores.GetInstructores;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using static MasterNet.Application.Cursos.CursoCreate.CursoCreateCommand;
 using static MasterNet.Application.Cursos.CursoReporteExcel.CursoReporteExcelQuery;
 using static MasterNet.Application.Cursos.GetCurso.GetCursoQuery;
 using static MasterNet.Application.Cursos.GetCursos.GetCursosQuery;
+using static MasterNet.Application.Instructores.GetInstructores.GetInstructoresQuery;
 
 namespace MasterNet.WebApi.Controllers;
 
@@ -71,5 +73,19 @@ public class CursosController : ControllerBase
 
         return File(excelBytes, "text/csv", "cursos.csv");
 
+    }
+
+    [HttpGet("instructores")]
+    public async Task<IActionResult> GetInstructores(
+        [FromQuery] GetInstructoresRequest request,
+        CancellationToken cancellationToken
+    ){
+        var query = new GetInstructoresQueryRequest{
+            InstructorRequest = request
+        };
+
+        var resultados = await _sender.Send(query,cancellationToken);
+
+        return resultados.IsSuccess ? Ok(resultados.Value) : NotFound();
     }
 }
