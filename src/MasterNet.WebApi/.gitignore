@@ -2,6 +2,8 @@ bin/
 obj/
 
 LocalDatabase.db
+LocalDatabase.db-shm
+LocalDatabase.db-wal
 
 appsettings.Production.json
 appsettings.Staging.json
